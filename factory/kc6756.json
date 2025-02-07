@@ -1,0 +1,9 @@
+{
+	"name": "kc6756",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f1293271-9734-4bde-98a8-023b2f37903b",
+		"tenantId": "01f1abe6-5744-419f-b858-7bb7324ce5b8"
+	}
+}

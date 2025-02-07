@@ -1,0 +1,70 @@
+{
+	"name": "sql_load_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_git",
+						"type": "DatasetReference",
+						"parameters": {
+							"load_flag": "transactions.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "generic_sql_ds",
+						"type": "DatasetReference",
+						"parameters": {
+							"db_name": "hospital-a",
+							"schema_name": "dbo",
+							"table_name": "transactions"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-02-07T14:22:42Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
